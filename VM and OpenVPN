@@ -1,0 +1,75 @@
+# Day 1
+## SSH Command
+This command will login to our linops as student: 
+`ssh student@10.x.x.x -X` pwd: password
+Linux IP:   10.50.22.232
+Windows IP: 10.50.35.21
+
+#OpenVPN
+Purpose of Guide - to provide a clear repeatable steps for setting up OpenVPN for home use.
+
+What is OpenVPN? - it is open-source software that implements a virtual private network (VPN) to create secure connections between remote hosts or even entire networks. OpenVPN establishes SSL/TLS tunnels which allow hosts to access resources as if they were on the same LAN despite being across the internet.
+
+Why use it? - OpenVPN provides students the ability to complete CTF challenges after class and instructors the ability to work from home by allowing personal devices to securely connect to the internal schoolhouse network.
+	While the US Cyber School/VTA network is affiliated with the U.S. Army this network is not to be confused with NIPR or the Army "domain" in general; this will not help you access the same Army admin websites you have trouble accessing from home.
+What you need
+
+Windows Users
+
+    Windows 10 or 11 Operating System
+
+    config.ovpn (config file)
+
+    OpenVPN-X.X.X-XXXX-amd64.msi (installer version recommended here)
+
+Run the Installer
+
+    Run OpenVPN-X.X.X-XXXX-amd64.msi
+
+    Agree to UAC/EULA window
+
+    Click "Next" to all windows
+
+    Finish
+
+Run installer
+Run OpenVPN GUI and Import Config File
+
+    Run OpenVPN GUI (if not started automatically after installation)
+
+    Navigate to the system tray for OpenVPN GUI
+
+        Right click
+
+        Import file…​
+
+        Navigate to config.ovpn and Open
+
+Import config
+Connect and Enter VTA creds
+
+    Navigate system tray for OpenVPN GUI (right click)
+
+    Connect
+
+    Enter Username and Password for VTA account
+
+    Click OK
+
+    Allow the connection through both public and private firewalls
+
+Connect
+A Green Monitor is Good
+
+    Navigate system tray for OpenVPN GUI (Is the monitor green?)
+
+Verify connection
+RDP into Admin Station
+
+    This allows you to access your student ranges
+
+RDP
+	Depending on individual circumstance (e.g. during distance learning exams) you may need to log into range boxes or OP stations directly via RDP or SSH via PowerShell (for Linux boxes).
+Log into CTFd
+Accomplish challenges
+You’re Done
