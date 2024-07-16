@@ -1,0 +1,65 @@
+
+
+
+
+
+
+#Activity - separate an email
+
+email = 'name@domain.com'
+email = email.split('@')
+snailtrail = email[1]
+snailtrail = snailtrail.split('.')
+slimey = [email[0], snailtrail[0], snailtrail[1]]
+print(slimey)
+
+##usage of .join()
+
+email = 'first.m.last@domain.com'
+step1 = email.split('@')
+comber = '.'.join(step1)
+step2 = comber.split('.')
+print(step2)
+
+##usage of .format()
+
+email = 'first.m.last@domain.com'
+step1 = email.split('@')
+comber = '.'.join(step1)
+step2 = comber.split('.')
+print(step2)
+
+##Usage of .append()
+
+blank = []
+email = 'name@domain.com'
+email2 = email.split('@')
+#email3 = email.split('.')
+
+#print(email2[1].split('.'))
+#print(email2)
+blank.append(email2[0])
+blank.append(email2[1].split('.')[0])
+blank.append(email2[1].split('.')[1])
+print(blank)
+#['name', 'domain', 'com']
+
+
+##I hate loops
+
+if <condition>:
+   <indented code block>
+elif <cond>:
+     <indented code block>
+
+##useage of loop parts
+
+num = int(input('type digit here, dumbbug:\n'))
+if num == 42:
+    print('this value is life')
+elif num < 42:
+    print('this value is lesser than life')
+elif num > 42:
+    print('this value greater that life')
+else:
+    print('try again hos')
