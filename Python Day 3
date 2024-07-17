@@ -1,0 +1,182 @@
+def test():
+    while True:
+        usr = input("Type 'Pass', 'Break', 'Continue', or 'Return': \n").lower()
+        if usr == 'pass':
+            pass
+            print("This is 'pass'")
+        elif usr == 'break':
+            print("this is 'break'")
+            break
+        elif usr == 'continue':
+            print("This is 'continue'")
+            continue
+        elif usr == 'return':
+            return 'This is return'
+        else:
+            print('please choose a valid option.')
+test()
+
+#number guesser
+
+def guess_num(n):
+    #pass
+    while True:
+        while True:
+                try:
+                    m = input('guess the number from 1 to 100: \n')
+                    m = int(m)
+                    break
+                except:
+                    print(m + ' is not a valid input')
+        if m == n:
+            print("WIN")
+            break
+        elif m < n:
+            print('Too low')
+        elif m > n:
+            print('Too high')
+        else:
+            print("don't do that")
+guess_num(23)
+
+#range()
+
+can be typecasted into a list, generateing a number from 0 to whatever is in range(#)
+list(range(10))
+[0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10]
+## operates on START STOP STEP
+range(Starting num, stopping num, interval{step}) - note that it will not display the stopping number
+range(5,10,1)
+[5, 6, 7, 8, 9]
+or
+range(0,6,-1)
+[5, 4, 3, 2, 1]
+
+#len() - tells you the length of a set of data. commonly use to find the number of entries in a list
+
+len(range(10))
+11
+
+def average(nums):
+  print(sum(nums)/len(nums))
+average([0,1,2,3,4])
+
+#slicing
+nums[0::]
+nums[start at 0: stop at 1:]
+
+#ord(a) - gives you ASCII number of place
+a-z 97-122
+A-Z 65-9
+
+#chr(65) - gives you character of ASCII postion
+
+alphabet = []
+for i in range(97,123):
+  alphabet.append(chr(i))
+
+#Dicionaries
+
+type({})
+<class 'dict'>
+
+romanNumerals = {'I':1, 'V':5, 'X':10, 'L':50}
+
+romanNumerals['C'] = 100
+
+romanNumerals = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100}
+
+
+A dictionary is a very powerful data structure that functions as a hash map. There are two types of items in a dictionary, keys and values. Keys are used as an identifier to store a value and is also used to retrieve a value. Keys must be hashable, meaning they are required to be immutable. Values are the other item in a dictionary. Values are allowed to be mutable or immutable and are retrieved from the dictionary using the key that was associated with the value when storing the value. Keys must be unique but values can be duplicated.
+
+Use del to delete a key/value mapping from a dictionary.
+Simple literal dictionary
+
+romanNumerals = {'I':1, 'V':5, 'X':10, 'L':50}
+romanNumerals['X']
+
+romanNumerals['C'] = 100
+romanNumerals['D'] = 500
+romanNumerals['M'] = 1000
+
+romanNumerals['C']
+
+del romanNumerals['C']
+'C' in romanNumerals
+'M' in romanNumerals
+
+You can iterate over a dictionary using a for loop.
+Iterating over a dictionary
+
+romanNumerals = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+
+#Print all keys with values
+for key in romanNumerals:
+    print('{} = {}'.format(key, romanNumerals[key]))
+
+#Easier method
+for key, value in romanNumerals.items():
+    print('{} = {}'.format(key, value))
+
+##File io
+
+with open("test.txt", 'w') as fp:
+	fp.write('First line\n')
+
+
+with open("test.txt", 'w') as fp:
+lines = ['Second Line\n', 'Third line\n', 'Fourth line', 'Last line\n']
+fp.writelines(lines)
+
+with open('test.txt', 'r') as outfile:   - NOTE ~ .split() can be used on outfile.read to split all individual words as single elements in a list
+outfile.read()
+
+file = 'test.txt'
+with open(file) as outfile:
+	outfile.read(5)   -   NOTE ~ reads first five bytes (characters in this scenario)
+
+with open(file) as fp:
+	fp.readline()
+	fp.readlines()
+
+with open(file) as fp:
+	for line in fp:
+		print(line, end ='') - end ='' gets rid of new lines
+
+fp = open(file)
+fp.close()
+
+
+p_words = []
+with open('school_prompt.txt') as fc:
+    for line in fc:
+        for word in line.split():
+            for char in word:
+                if char == 'p':
+                    p_words.append(word)
+                    break
+
+
+
+
+
+
+
+##args
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
