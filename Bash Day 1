@@ -54,7 +54,11 @@ https://baeldung.com/linux/bash-single-versus-double-brackets
 _______________________BRACE EXPANSION________________________________________________
 mkdir cosc11{23,45,67}
 
-
+_________________________________KILL AND PKILL__________________________________________
+ps -elf
+ps aux
+kill ####
+pkill <process name>
 
 
 
