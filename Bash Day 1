@@ -47,7 +47,7 @@ grep -n (line num)
 grep -v (inverted search)
 
 ___________________PRINTF_|| BRACKETS || CHALLENGES__________________________
-https://phoenixap.com/kb/bash-printf
+https://phoenixnap.com/kb/bash-printf
 https://baeldung.com/linux/bash-single-versus-double-brackets
 10.50.26.116/admin/challenges
 
