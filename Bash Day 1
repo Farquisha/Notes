@@ -9,7 +9,7 @@ pwd
 cp <source> <destination>
 cat /etc/passwd
 
-##find cmd - 
+__________________________________FIND___________________________________________
 
 find -name (case sensitive name of file)
 find -iname (case insensitive name of file)
@@ -30,7 +30,49 @@ find -cmin 60 (find anything changed within last ## min)
 find -mmin 60 (find anything modified within last ## min)
 
 EX.) find $HOME -mtime 0
+     find / -perm /4000 -uid 0 -ls 2>/dev/null
 
 sudo !! (runs previous cmd with root permissions)
 
 find -exec (https://linuxhandbook.com/find-exec-command/)
+
+find /var/log -iname *.log -printf "%f %i\n"
+
+___________________________GREP_______________________________________
+
+grep (grab regular expression)
+egrep || grep -E (extended grep)
+grep -i (case insensitive)
+grep -n (line num)
+grep -v (inverted search)
+
+___________________PRINTF_|| BRACKETS || CHALLENGES__________________________
+https:// phoenixap.com/kb/bash-printf
+https://baeldung.com/linux/bash-single-versus-double-brackets
+10.50.26.116/admin/challenges
+
+_______________________BRACE EXPANSION________________________________________________
+mkdir cosc11{23,45,67}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
