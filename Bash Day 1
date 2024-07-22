@@ -28,6 +28,7 @@ find -mtime 3 (anything modified within last 3 days)
 find -amin 60 (find anything accessed within last ## min)
 find -cmin 60 (find anything changed within last ## min)
 find -mmin 60 (find anything modified within last ## min)
+find -empty ()
 
 EX.) find $HOME -mtime 0
      find / -perm /4000 -uid 0 -ls 2>/dev/null
