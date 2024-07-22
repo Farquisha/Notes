@@ -1,1 +1,36 @@
+https://cted.cybbh.io/tech-college/pns/public/pns/latest/guides/bash_sg.html
 
+rm -rf (forcefully remove)
+rmdir
+touch (files)
+mkdir
+ls -lisa
+pwd
+cp <source> <destination>
+cat /etc/passwd
+
+##find cmd - 
+
+find -name (case sensitive name of file)
+find -iname (case insensitive name of file)
+find -inum (Inode num finder)
+find -size (-1G, +1G, -1M, +1M, etc...) (searches size based on unit provided)
+find -uid #### (pretty self explanitory)
+find -gid ####
+find -maxdepth  (tells find cmd how deep to go)
+find / -type d
+find -type p
+find -f (serch from base of file system?)
+find -iname \*.txt (finds all files in pwd with .txt extention)
+find -atime 3 (find anything accessed within last 3 days)
+find -ctime 3 (anything changed within last 3 days)
+find -mtime 3 (anything modified within last 3 days)
+find -amin 60 (find anything accessed within last ## min)
+find -cmin 60 (find anything changed within last ## min)
+find -mmin 60 (find anything modified within last ## min)
+
+EX.) find $HOME -mtime 0
+
+sudo !! (runs previous cmd with root permissions)
+
+find -exec (https://linuxhandbook.com/find-exec-command/)
