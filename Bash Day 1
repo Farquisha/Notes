@@ -60,10 +60,16 @@ ps aux
 kill ####
 pkill <process name>
 
+______________________________________________________CUT_____________________________________________________
 
+cat fakepasswd.txt | cut -d: -f1 -s (d for delimiter, separated by colon [:]. -f1 designates field 1 of he cat command, -s designates strings only)
 
+_______________________________________________________________CHAINING OPERATORS_______________________________________________________________________
 
-
+and, &&
+or, ||
+not, !
+pipe, |
 
 
 
