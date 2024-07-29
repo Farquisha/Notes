@@ -4,6 +4,7 @@ This command will login to our linops as student:
 `ssh student@10.x.x.x -X` pwd: password
 Linux IP:   10.50.22.232
 Windows IP: 10.50.35.21
+xfreerdp /u:student /v:10.50.35.21 -dynamic-resolution +glyph-cache +clipboard
 
 #OpenVPN
 Purpose of Guide - to provide a clear repeatable steps for setting up OpenVPN for home use.
