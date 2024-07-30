@@ -1,0 +1,189 @@
+aposrophes are literal, quotes preserve variable function (See variables tab) or site https://www.red-gate.com/simple-talk/sysadmin/powershell/when-to-quote-in-powershell/
+
+
+_________________________________GET-___________________________________________
+get-help
+get-childitem -path c:\windows -filter *.exe recurse -name
+get-command
+get-command -verb get
+get-command -noun process
+get-help *log*
+get-help *event*
+get-help get-process -online  -- note: opens windows powershell webpage
+get-service
+get-alias -Definition Get-ChildItem
+Get-Random  --  NOTE: pulls random number. can be limited with -maximum <#> and -minimum <#>  --  NOTE.) when assigning random number to a variable, the variable will hold the initial random number only.
+Get-Variable x  -or  Get-ChildItem variable:x
+
+Ex.) get-help get-command -Examples
+     get-help get-process -full
+     Get-Service | where-object {$_.status -eq "running"}
+     Get-Service | where-object -property status -eq 'stopped'
+
+
+___________________________________linux cmd___(Powershell)_____________________________
+ls
+tasklist (get-process)
+echo
+
+______________________________________SHOW-______________________________
+show-netfirewallrules
+
+
+_______________________________________________Update-Help____________________________________________________
+
+
+__________________________________Make an ALIAS_____________________________________
+Set-Alias -Name <string> -Value <command>
+
+_____________________________________Viewing/manipulating processes_____________________
+Debug-Process
+Get-Process
+Start-Process
+Stop-Process
+Wait-Process
+
+__________________________________print__________________________________
+echo
+OR
+Write-Output
+
+_________________________create/modify/list/delete variables_______________________
+Get-variable
+Clear-Variable
+Remove-Variable || Remove-Item
+New-Variable
+Set-Variable
+
+
+_____________________________________________User input command(s)__________________________________________
+Read-Host <-prompt 'string'>
+
+
+(get-process).processname
+
+
+_______________________________________________________________________________________________________________
+$cols = @{Label="KB"; Expression = { [int]($_.Length/1KB)
+Get-ChildItem | Format-Table name, $cols
+
+
+___________________________________FUNCTIONS_________________________________________
+<func name>-host | sort  --  NOTE.) -host simply writes it back to you. -host does NOT send data down the line.
+<func name>-output | sort
+
+
+_______________________________________________Variables____________________________________________
+$x, $y, $z = "this", "that", "third"
+test-path variable:x
+remove-variable x
+del variable:x
+
+
+$var1 = "Jon"
+write-host "Hello $var1"  ==  Hello Jon
+write-host 'Hello $var1'  ==  Hello $var1
+
+
+$var1 = Get-Random -Minimum 25 -Maximum 50
+$var2 = Get-Random -Maximum 10 -Minimum 1
+$sum = $var1 + $var2
+$sub = $var1 - $var2
+$prod = $var1 * $var2
+$quo = $var1 / $var2
+write-host "$var1" + "$var2" = "$sum"
+write-host "$var1" - "$var2" ="$sub"
+write-host "$var1" * "$var2" = "$prod"
+write-host "$var1" / "$var2" = "$quo"
+
+
+______________________________________ARRAYS______________________________________
+
+$revarray = -3..15<:inc>
+
+
+
+__________________________HASHTABLES_______________________________
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_hash_tables?view=powershell-7.4
+
+https://www.tutorialspoint.com/powershell/powershell_brackets.htm
+
+
+___________________________________Hash Tables______________________________________
+$employee1 = [ordered]@{}
+$employee2 = [ordered]@{}
+
+$employee1.first = "Mary"
+$employee1["Last"] = "Hopper"
+$employee1.ID = "001"
+$employee1["Job"] = "Software Developer"
+
+
+$employee2.first = "John"
+$employee2["Last"] = "Williams"
+$employee2.ID = "002"
+$employee2["Job"] = "Web Developer"
+ 
+
+$employee1.Username = "mhopper001"
+$employee2["Username"] = "jwilliams002"
+$employee2._ = ""
+
+$employee1.Job = "Software Lead"
+$employee1._ = ""
+
+$employee3 = [ordered]@{}
+
+$employee3.first = "Bob"
+$employee3.Last = "Marley"
+$employee3.ID = "20"
+$employee3.Job = "accountant"
+$employee3.username = "BMarley20"
+$employee3._ = ""
+
+$employee1
+$employee2
+$employee3
+
+
+
+
+______________________________________________________Foreach loop_________________________________________________________
+
+foreach ($grp in (Get-LocalGroup).name) {
+    Write-Host "`n$grp" -ForegroundColor red
+    '========================================'
+    (Get-LocalGroupMember -Name $grp).name`
+    -replace("$env:computername\\",'')
+}
+
+
+Get-CimInstance win32_service | Sort-Object -Property state | ft -Property ProcessID,Name,State,pathname
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
