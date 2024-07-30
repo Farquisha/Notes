@@ -1,0 +1,176 @@
+F8, Invoke-command <cmd>, or &  will run your whole script.
+
+________________________SCRIPT BLOCKS___________________________________________
+
+$myblock = {get-service | format-table name, status}
+
+________________________SORTING & GROUPING______________________________________
+
+Get-ChildItem | Sort-Object -Property length -Descending
+Get-ChildItem C:\Users\student | Sort-Object -Property Extention
+Get-Service | Group-Object status
+Get-Process | Sort-Object Start_Time
+Get-Process | Select Name, StartTime | Sort-Object -Property StartTime
+Date | Select-Object DayOfWeek
+Get-HotFix | Sort-Object -Property Description | Select-Object HotFixID,InstalledOn,Description
+gci *.txt | Where-Object{$_.Length -gt 100}
+Get-ChildItem C:\ | Measure-Object Length
+
+____________________________Enumeration_________________________________
+
+Get-HotFix
+
+
+____________________________Wierd adding thingy_________________________
+
+$array = 1,2,3,4,5
+$sum = 0
+$array | ForEach-Object {$sum += $_}
+$sum
+
+__________________________________Object Creation and adding properties__________________________________
+
+$MyTruck = New-Object Object
+
+Add-Member -MemberType NoteProperty -Name Color -Value Red -InputObject $MyTruck
+Add-Member -Me NoteProperty -In $MyTruck -Na Make -Value FordDNA
+Add-Member -InputObject $MyTruck NoteProperty Model "F-250 High-boy "
+$MyTruck | Add-Member NoteProperty Transmission FourSpeed
+Add-Member -MemberType ScriptMethod -InputObject $MyTruck -Name Drive -Value { "Going Overlanding" }
+Add-Member -InputObject $MyTruck ScriptMethod Accelerate { "Throttle up and Clutch pedal up" }
+$MyTruck | Add-Member ScriptMethod Park { "Put 'er in P and pull the lever" }
+
+
+$MyTruck.Accelerate()
+$MyTruck.Drive()
+$MyTruck.Park()
+
+
+________________________________________BOOLEAN COMPARISONS_______________________________________
+
+Largely based around || -match ||
+
+$text = "your account username is DAMN1983"
+$pattern = '([A-Z]{4})(\d{3})'
+$text -match $pattern
+
+
+________________________________________Branching statements________________________________________________
+
+$x = Get-Random -Minimum 1 -Maximum 8
+if ($x -eq 5) {
+    Write-Host "Bob"
+    }
+elseif ($x -eq 4) {
+    Write-Host "Sue"
+}
+elseif ($x -eq 2) {
+    Write-Host "Tom"
+}
+elseif ($x -gt 6) {
+    Write-Host "Mary"
+}
+else {
+    Write-Host "Who?"
+}
+
+
+$nums = 1,2,3,4,5
+$nums | ForEach-Object{$_ * 2}
+
+
+$list = 'a', 'b', 'c', 'd'
+$list | ForEach-Object {$_.toupper()}   --   NOTE: .toupper() makes uppercase. .tolower() is its antithesis.
+
+
+
+
+__________________________________________Foreach and ForEach-Object Statements__________________________________________
+Get-Process | Select-Object -First 10 | ForEach-Object {$_.Name} | ForEach-Object {$_.toupper()}
+
+$teams = "Yankees", "fsu", "tiger", "greenjackets"
+foreach($teams in $teams){"sportsball $teams"}
+
+
+_________________________________________________WHILE LOOPS______________________________________________________________
+
+$var = ""
+while($var -ne "MUHRINS"){
+    $var = Read-Host "Which branch of the military is the best?"
+}
+
+
+$nums = 0 
+do {
+  $nums
+  $nums++
+}while($nums -le 100)
+
+$nums = 0 
+do {
+  $nums
+  $nums++
+}until($nums -gt 3)
+
+
+______________________________________________________________FOR LOOPS____________________________________________________________________
+
+
+For($num = 1; $num -le 3; $num++){$num}
+
+
+$num = 0
+while($num -lt 10) {
+    $num += 1
+    if($num -eq 5) {
+        break
+        }
+    $num
+}
+
+
+$num = 0
+while($num -lt 4) {
+    $num += 1
+    if($num -eq 2) {
+        continue
+        }
+    $num
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
