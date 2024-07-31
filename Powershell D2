@@ -139,6 +139,36 @@ while($num -lt 4) {
 }
 
 
+$ary = "notepad", "msedge", "mspaint"
+
+foreach($or in $ary) {Start-Process $or}
+start-sleep -Seconds 5
+foreach($ir in $ary) {Stop-Process -name $ir}
+
+
+____________________________________MATH PARTS_____________________________________
+
+Square root  --  [Math]::Sqrt(64)
+to the power of  --  [Math]::Pow(8)
+1,2,3,4,5 | measure-Object -average  --  result below
+Count    : 5
+Average  : 3
+sum      :  
+Maximum  :
+Minimum  :
+Property :
+
+(1,2,3,4,5 | measure-Object -average).Average  --  result below
+3
+.GetType() can also be used.
+
+_______________________________________________________Comparaters__________________________________________________________
+
+'msedge' -like '*MS*'   --   True
+'msedge' -clike '*MS*'   --   False
+'msedge' -match '^m.*$'
+( '^#.*$' | )  --  to look for comments
+
 
 
 
