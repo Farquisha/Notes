@@ -19,3 +19,107 @@ function Get-sum{
     Process {$sum += $_; $_}
     End {$sum}
 }
+
+_________________________________________________________________
+
+
+function Get-LongestName() {
+    Begin{
+        $st1 = Read-Host "Enter 1st state"
+        $st2 = Read-Host "Enter 1st state"
+        $st3 = Read-Host "Enter 3rd state"
+        $lstr = @($st1, $st2, $st3)
+        }
+    Process{
+        $lstr = ($lstr | Sort-Object -Descending -Property length)
+        }
+    End{foreach ($i in $lstr) {
+        Write-Host $i $i.length
+    }
+}
+}
+
+or
+
+Function Get-LongestName1 {
+    Begin {
+        $count = 0 #Keep track of states entered
+        $states = @() #This will store states
+    }
+    Process {
+        while($count -lt 3){
+            $usrinp = Read-Host "Enter a U.S. string" # Storing user input
+            $states += $usrinp
+            $count += 1 # Adds 1 to the counter of states
+        }
+    }
+    End {
+        $list = $states | sort -Property Length -Descending # Stores the sorted array to $list
+        foreach($i in $list){
+        "$i`: " + $i.length #Concatenates length of $states to end of $states
+        }
+    }
+}
+
+
+
+
+
+______________________________IPv4 collecter____________________________________
+
+
+Function Get-NetInfo {
+    $pattern = '.*?((\d{1,3}\.){3}\d{1,3})'
+    $netinfo = ipconfig # This is an [array]
+    
+    ### Create the matches for IP, subnets, and gateways
+    $ip = $netinfo -match "IPv4$pattern" | %{if ($_ -match $pattern){$Matches[1]}}
+    $subnet = $netinfo -match "Subnet$pattern" | %{if ($_ -match $pattern){$Matches[1]}}
+    
+    $gw = $netinfo -match "Gateway$pattern" | %{if ($_ -match $pattern){$Matches[1]}}
+    
+    "ip: {0}`nSubnet: {1}`nGateway: {2}" -f $ip,$subnet,$gw  #Formating the string
+}
+
+______________________________DNS INFO______________________________________________
+
+
+Function Get-UrlInfo {
+    $file = Get-Content .\dns.txt
+    $regex = '(www\.[a-zA-Z0-9\-\.].(com|org|net))'
+    foreach($line in $file) {
+        if($line -match $regex) {
+            $Matches[1]
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
