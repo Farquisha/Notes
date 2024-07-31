@@ -1,0 +1,21 @@
+# "elements provided on the pipeline"
+
+function Print-PSitem{
+    Begin  {}
+    Process {foreach($i in $PSitem){$i}}
+    End {}
+}
+
+function Print-Input {
+    foreach($i in $input){$i}
+}
+
+
+_______________________________________________________________
+
+
+function Get-sum{
+    Begin  {$sum = 0}
+    Process {$sum += $_; $_}
+    End {$sum}
+}
