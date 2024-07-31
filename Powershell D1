@@ -73,6 +73,30 @@ ___________________________________FUNCTIONS____________________________________
 <func name>-output | sort
 
 
+
+___________________________________________________ADV FUNCTIONS_______________________________________________________
+
+
+Function advfunc([array]$arg1, [int]$arg2) {
+    Begin {$sum = 0}
+    Process {
+        foreach($i in $arg1){
+        if($i -eq $arg2){
+            continue
+            }
+            $sum += $i
+        }
+    }
+    End {$sum}
+}
+
+advfunc @(1..10) 5
+^
+This final command calls upon function 'advfunc' 
+and supplys $arg1 with #@(1..10)# and $arg2 with #5#
+
+
+
 _______________________________________________Variables____________________________________________
 $x, $y, $z = "this", "that", "third"
 test-path variable:x
