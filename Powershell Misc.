@@ -95,6 +95,18 @@ Function Get-UrlInfo {
 }
 
 
+________________________________________________TESTING STUFF_______________________________________(DELETE)
+
+New-Item -path C:\Users\student\Desktop -name `
+"Practice" -ItemType "directory"
+
+Invoke-WebRequest -Uri "10.50.29.106:42063/psexam.exe" `
+-OutFile C:\Users\student\Desktop\Practice\psexam.exe
+
+Invoke-WebRequest -Uri "10.50.29.106:42063/exam.ps1" `
+-OutFile C:\Users\student\Desktop\Practice\exam.ps1
+
+
 
 
 
