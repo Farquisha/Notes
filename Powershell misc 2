@@ -126,10 +126,10 @@ function q9($addr) {
 
     foreach($octet in $addr.split(".")){
         if([int]$octet -lt 0 -or [int]$octet -gt 255){
-            return false
+            return $false
         }
     }
-    return True
+    return $True
 }
 
 _==========================================================================================_
