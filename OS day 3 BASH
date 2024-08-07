@@ -1,0 +1,94 @@
+1. hostname or uname -a displays the name of the host you are currently on.
+2. whoami shows the user you are currently logged in as (useful after gaining access through service exploitation).
+3. w or who shows who else is logged in.
+4. ip addr or ifconfig displays network interfaces and configured IP addresses.
+5. ip neigh or arp displays MAC addresses of devices observed on the network.
+6. ip route or route shows where packets will be routed for a particular destination address.
+7. ss or netstat will show network connections, with the appropriate flags will show listening ports
+8. nft list tables or iptables -L to view firewall rules.
+9. sudo -l displays commands the user may run with elevated permissions
+=====================================================================================================================
+Assigning a Single Value to a Variable
+
+student:~$ echo $a ).1
+                   ).2
+student:~$ a="100" ).3
+student:~$ echo $a ).4
+100 ).5
+=====================================================================================================================
+
+Users in Linux systems are defined by an ascending numerical value called a UID. The uid value uniquely identifies a user and is contained in the /etc/passwd file along with an associated username
+\ /
+ V
+Groups in Linux define a collection of Users and are defined by an ascending GID value. The gid value uniquely identifies a group and is contained in the /etc/group and its associated group name
+Looking at who I am in the /etc/group file with cat
+
+student@linux-opstation-kspt:/bin$ cat /etc/group | grep student .)1
+sudo:x:27:ubuntu,student .)2
+student:x:1001: .)3
+
+
+Access to objects in Linux by is controlled via strict file permissions metadata. It is formatted as:
+
+    U The object’s User/Owner
+    G The object’s owning Group
+    O Any subject that is not the owning user or group, AKA: "Others"
+
+Showing Linux Permissions with ls -lisa
+/bin$ ls -lisa /bin/dd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
