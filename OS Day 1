@@ -1,8 +1,0 @@
-Links used this course:
-http://10.50.22.197:8000/register
-https://os.cybbh.io/public/os/latest/index.html
-===========================================================================
-Stack number 6:
-10.50.38.197
-===========================================================================
-xfreerdp /u:$USER /v:$IP_ADDRESS> /dynamic-resolution +glyph-cache +clipboard

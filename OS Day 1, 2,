@@ -1,0 +1,67 @@
+Links used this course:
+http://10.50.22.197:8000/register
+https://os.cybbh.io/public/os/latest/index.html
+===========================================================================
+Stack number 6:
+10.50.38.197
+===========================================================================
+xfreerdp /u:$USER /v:$IP_ADDRESS> /dynamic-resolution +glyph-cache +clipboard
+_______________________________________________________________________________
+OS Day 2 registry cheat sheet
+https://training.13cubed.com/downloads
+
+
+DISABLE WINDOWS DEFENDER
+Set-MpPreference -DisableRealtimeMonitoring $TRUE (Powershell)
+Remember to look at HKeys and Registries
+          \/
+    HKEY_LOCAL_MACHINE
+    HKEY_USERS
+    HKEY_CURRENT_USERS
+    HKEY_CURRENT_CONFIG
+    HKEY_CLASSES_ROOT
+
+You can do so with regedit, or CMD
+CMD commands
+reg /?
+reg query /? (reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run)
+reg add /?
+reg delete /?
+
+Or with powershell
+Get-ChildItem HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+Get-ChildItem HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\
+
+New-Item "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe"
+New-ItemProperty -path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe" -Name Debugger -Type String -Value C:\Windows\System32\cmd.exe
+
+Sometimes, the previous command may not work as expected. In such cases, you can follow these steps:
+	1. Click the Windows button in the lower-left corner of your desktop.
+	2. Navigate to "Virus & threat protection."
+	3. Under "Virus & threat protection settings," click "Manage settings."
+	4. Finally, toggle off "Real-Time protection." These steps will help you turn off real-time protection using the Windows Security interface
+
+ALternate data streams are used to hide Data amongst legitimate data, most often amongst the original files metadata. Does not change the MD5 hash result of the 
+
+Get-Item <filename.txt> -Stream *   ---   Used to find all of the alternate data streams of a file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
