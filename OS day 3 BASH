@@ -37,8 +37,9 @@ Access to objects in Linux by is controlled via strict file permissions metadata
 Showing Linux Permissions with ls -lisa
 /bin$ ls -lisa /bin/dd
 
+IPv4 validator
 
-
+grep -P "^((\d{1,2}|1\d{1,2}|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d{1,2}|2[0-4]\d|25[0-5])$"
 
 
 
