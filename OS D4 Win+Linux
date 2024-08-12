@@ -288,13 +288,37 @@ View the highest available setting of regedit
 How to locate Windows executables that have autoelevate in the manifest
     ./strings –s c:\windows\system32\*.exe | findstr /i autoelevate
 ===================================================================================================================
+						GUI TOOLS
+Autoruns - persistance locations
+
+LoadOrder - Find 'Load Order Groups'
+
+TCPview - see network connections
 
 
 
 ===================================================================================================================
+						COMMAND PROMPT UTILITIES
+Handles - something with handles and paths
+(.\Desktop\handle.exe -accepteula | findstr "spoolsv.exe")
 
+accesschk - access = permissions, and permissions = access.
+(.\Desktop\accesschk -accepteula C:\Windows\System32\spoolsv.exe) 
 
+ListDLLs - can be ran from a file
+(.\Desktop\listdlls.exe winlogon.exe)
 
+netsh - public profile for defender firewall
+(netsh advfirewall show currentprofile)
+
+sigcheck - view a files manifest (meta-data)
+(.\Desktop\sigcheck.exe -m C:\Windows\System32\schtasks.exe)
+
+sc query <servicename> - show service info
+
+sc query state= all - Enumerates all services & drivers
+
+sc showsid <servicename> - take a good guess
 ===================================================================================================================
 
 
