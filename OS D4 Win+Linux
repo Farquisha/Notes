@@ -320,30 +320,116 @@ sc query state= all - Enumerates all services & drivers
 
 sc showsid <servicename> - take a good guess
 ===================================================================================================================
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+-----------------------------------------------LINUX PROCESS VALIDITY----------------------------------------------
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+===================================================================================================================
+					-*-*Useful commands*-*-
+ps -elf | show a selection of processes in full format listing
+ps -f | spawned processes
+ps -L 4264 | processes with PID
+ps -C <process_name> | search PID
+ps -fp <PID> | display processes by their PID
+ps -f --forest -C <proc_name> | display process hierarchy in a tree diagram
+ps -o pid,uname,comm -C bash | Display child processes of a parent process
+
+pgrep -P <pid> | show pid of all child processes spawn
+
+top | dynamic real time view of running processes
+htop | human top. Same thing as top but more user friendly
+
+nano <filename/path>.sh - will create a new empty shell file to be filled with 
+
+disown -a && exit | Close a shell/terminal and force all children to be adopted
+
+service <servicename> status/start/stop/restart | Check status/start/stop/restart a service on sysV
+
+systemctl | manage services on a systemd enabled server
+
+cron | see what daemons start on boot
+crontab -l | list all scheduled cron jobs for the current user
+sudo crontab -u [username] -l | list cron jobs that belong to a specific user
+
+sudo lsof -c sshd | List all open files for a specific process (Keyword handles, file descriptors, unique identifier)
+
+ls -l /proc/ | List all the proc directories
+
+crontab <option> | opens the cron table for editing
+-u [user] file | load the crontab data from the specified file
+-l -u [user] | display/list user’s crontab contents
+-r -u [user] | remove user’s crontab contents
+-e -u [user] | edit user’s crontab contents
+
+netstat -lntu 
+
+
+===================================================================================================================
+					-*-*Startup processes*-*-
+0 - kernel mode
+1 - /sbin/init
+
+*/*/*/*/*/The cron daemon checks the directories /var/spool/cron, /etc/cron.d and the file /etc/crontab, once a minute and executes any commands specified that match the time\*\*\*\*\*
+===================================================================================================================
+					-*-*Key Points*-*-
+net
+Kernel processes are typically used to manage hardware, are directly handled by the kernel, have their own memory space, and have a high priority
 
 
 
+===================================================================================================================
+EUID - effective user ID
+RUID - real user ID. Defines who can kill processes
+
+
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
 
 
 
+===================================================================================================================
+
+
+
+===================================================================================================================
+
+
+
+===================================================================================================================
+
+
+
+===================================================================================================================
+
+
+
+===================================================================================================================
+
+
+
+===================================================================================================================
 
 
 
