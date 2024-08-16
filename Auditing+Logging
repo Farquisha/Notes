@@ -1,0 +1,189 @@
+              WINDOWS                
+=========================================================================================================================
+              ARTIFACTS:
+objects or areas within a computer system that contain important information relevant to the activities performed on the system by the user
+
+Forensically relevent Registry locations:
+https://resources.infosecinstitute.com/windows-systems-and-artifacts-in-digital-forensics-part-i-registry/
+
+=========================================================================================================================
+Relevent commands (Powershell):
+Get-LocalUser - show local Users and SID on a system
+
+Get-LocalUser | select Name,SID  -  dig into the user specific registry locations
+
+Get-WmiObject - show local and domain Users and SID
+
+wmic UserAccount get name,sid  -  Get SIDS in Command Prompt
+
+Get-ItemProperty - 
+
+Get-ComputerInfo | select osname,osversion,OsHardwareAbstractionLayer  -|-  get Windows OS Version - Ran in Admin-Station
+
+Get-Item HKLM:\SYSTEM\CurrentControlSet\Services\bam\state\UserSettings\*  -|-  BAM entries for every user on the system
+
+wmic useraccount  get caption,sid | more  -|-  Single User on the System
+
+Get-Childitem 'C:\$RECYCLE.BIN' -Recurse -Verbose -Force -|- select FullName  -|-  Find the Contents of the Recycle Bin \
+                                                                                                                     Useful together
+wmic useraccount where 'sid="<SID_HERE>"' get name  -|-  Match SID to USER   _________________________________________/
+
+Get-Childitem -Path 'C:\Windows\Prefetch' -ErrorAction Continue | select -First 8  -|- programs that were run and when they were executed that are stored in the Prefetch location
+
+Get-Childitem -Recurse C:\Users\*\AppData\Roaming\Microsoft\Windows\Recent -ErrorAction Continue | select FullName, LastAccessTime -|- Programs/Items that were recently used
+
+Get-Item 'Registry::\HKEY_USERS\*\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.*' 
+    Hive: \HKEY_USERS\S-1-5-21-1584283910-3275287195-1754958050-1005\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs -|- Query the Hex Value Stored in the Key
+
+Z:\strings.exe 'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\History' -accepteula -|- Location of the SQL Lite Text Files (frequencey
+Z:\strings.exe 'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\Top Sites' -|- Most Visited
+Z:\strings.exe  'C:\users\andy.dwyer\AppData\Local\Google\Chrome\User Data\Default\Login Data' -|- User Names
+
+Get-EventLog -LogName System <-Newest #> | Format-Table -Wrap -|- View Event Logs in Powershell
+Get-Eventlog -LogName Security | ft -wrap | findstr /i <StR1nG> -|- Search through the entire Security log for a specific string
+
+Get-WinEvent -Listlog * -|- Finding Log Type to Query
+
+Get-Winevent -FilterHashtable @{logname='Security';id='4624'} | ft -Wrap -|- Checking If a User Logged on
+
+Start-Transcript -|- creates a record of all or part of a PowerShell session to a text file
+
+Get-History -|- record of every command entered during a Powershell Session
+
+Get-Content "C:\users\^$env:username^\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt"
+  -|- access the the history
+
+=========================================================================================================================
+relevent Hive keys:
+
+- HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\{GUID}\Count\ *
+  (GUID encoded in ROT13. Use CyberChef to decode)
+    - CEBFF5CD-ACE2-4F4F-9178-9926F41749EA  -  List of applications, files, links, and other objects that have been accessed
+    - F4E57C4B-2036-45F0-A9AB-443BCFE33D9F  -  Lists the Shortcut Links used to start programs
+
+Show in Reg Edit:
+  - HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\bam\State\UserSettings - on build 1809+
+  - HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\bam\UserSettings - on build 1803-
+
+RECENT FILES:
+  - HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs
+  - HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.txt
+
+BROWSER ARTIFACTS;
+  - %USERPROFILE%\AppData\Local\Google\Chrome\User Data\Default\history
+  - The file location is different for every browser. 
+
+AUDIT POLICY CONFIG.:
+  - HKLM\SECURITY\Policy\PolAdtEv
+
+===========================================================================================================================
+Relevent File Locations:
+C:\$Recycle.bin  -  (Hidden System Folder)
+C:\Windows\Prefetch
+
+C:\%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations (C:\Users\<tuser>\AppData\Roaming\Microsoft\Windows\Recent)
+Show in Explorer:
+C:\%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations (C:\Users\<tuser>\AppData\Roaming\Microsoft\Windows\Recent)
+
+POWERSHELL HISTORY LOCATION:
+C:\Users\<username>\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+
+
+===========================================================================================================================
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX__LINUX__XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+===========================================================================================================================
+Relevent commands (BASH):
+
+cat /var/log/syslog | grep timesyncd - Filtering Syslog Output With Grep
+cat /var/log/syslog | grep -R "\w*\.\w*\.\w*"
+
+sudo /usr/sbin/logrotate /etc/logrotate.conf - Force log rotations
+
+journalctl -e -- command that reads Journald Binary logs
+journalctl --list-boots -- Filtering logs by Boot
+journalctl -u <ssh.service> -- Filtering Logs by a specific unit
+journalctl -u <ssh.service> --since "2 days ago" -- Filtering Logs since a specific time period
+
+XML sites:
+Freeformatter.com | Xpather.com | https://www.w3schools.com/xml/xpath_syntax.asp
+
+xpath -q -e '//element/@attribute' file.xml -- Xpath Syntax
+
+
+============================================================================================================================
+Relevent File Paths and daemons:
+
+syslog (universal daemon. all have)
+
+journald (systemd-journald.service) [unique daemon. some have]
+logs everything in regards to *.units. stores its logs in binary form
+
+
+
+*Sample Syslog Configuration*
+cat /etc/rsyslog.d/50-default.conf
+
+/etc/logrotate.conf
+
+/var/log/auth.log -- Any logs having to do with logins and authentication attempts
+
+/var/log/mysql.log -- Any logs having to do with programs
+
+/var/log/messages -- Legacy Catch all
+/var/log/syslog -- Ubuntu/Debian Catch all
+dmesg = Device Messenger (queires /proc/kmsg)
+
+
+============================================================================================================================
+Syslog logging configuration standard
+
+Selectors | facility. severity
+Action | /path/to/log/location
+----------------------------------------------------------------------------------------------------------------------------
+Syslog Message Facilities (RFC 5424)
+0 - kernel messages
+1 - user-level messages
+2 - mail system
+3 - system daemons
+4 - security/authorization messages
+5 - messages made by syslogd
+6 - line printer subsystem
+7 - network news subsystem
+*This is not every Facility Code. See the RFC for a listing of every code*
+
+Syslog Message Severities
+0 - Emergency
+1 - Alert
+2 - Critical
+3 - Error
+4 - Warning
+5 - Notice
+6 - Informational
+7 - Debug
+
+
+============================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
