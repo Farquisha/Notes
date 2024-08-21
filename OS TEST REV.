@@ -1,0 +1,78 @@
+DAY 1. - ps profiles
+
+powershell profiles in the Powershell section of facilitation guide
+
+__________________________________________________________________________
+hive keys and *registries*
+difference between get item and gci
+
+__________________________________________________________________________
+Alternate Data Stream - not used for persistance, but is used for hiding data and obfuscation
+persistance mechanism MAY be hidden inside of an ADS 
+
+__________________________________________________________________________
+Linux Essentials
+File vs Folder permissions
+don't forget sudo
+__________________________________________________________________________
+Linux boot proc.
+Crontab or Cron (scheduled tasks)
+RC targets/run levels
+/bash/rc (profile)
+/etc/init
+/sbin/init
+/etc/environment
+___________________________________________________________________________
+Linux boot proc. 2
+SysV:
+/etc/init
+/etc/inittab
+
+SystemD:
+/sbin/init - symb linked to /lib/systemd/system. systemd
+/etc/environment
+/bash/profile
+/bash/rc
+___________________________________________________________________________
+Anomolus ports:
+anything sequential
+e.g.: 12,13,14,15,16,17
+anything repeating
+e.g.: 12121212, 4444, 3535, 
+____________________________________________________________________________
+Sysinternals:
+procmon
+
+
+
+/var/spool/cron
+/etc/cron.d
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
