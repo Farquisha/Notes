@@ -1,0 +1,286 @@
+CTFD-1
+	http://networking-ctfd-1.server.vta:8000/
+  http://10.50.20.180:8000/
+
+CTFD-2
+	http://networking-ctfd-2.server.vta:8000/
+	http://10.50.23.63:8000/
+
+Practice Server
+	http://networking-practice-ctfd.server.vta:8000/
+	http://10.50.23.19:8000/
+====================================================================================================================================
+
+OSI MODEL
+
+Protocol Data Unit (PDU)
+    (5) Session-Application = Data
+    (4) Transport = Segment/Datagram
+    (3) Network = Packet
+    (2) Data Link = Frame
+    (1) Physical = Bit
+
+Internet Standards Organizations
+
+    IETF - RFC’s (Request for Comment(s))
+    IANA - Internet Numbers
+    IEEE - LAN/WAN electrical standards
+
+
+=====================================================================================================================================
+
+AFRINIC	Africa Region
+APNIC	Asia/Pacific Region
+ARIN	Canada, *USA*, and some Caribbean Islands
+LACNIC	Latin America and some Caribbean Islands
+RIPE NCC	Europe, the Middle East, and Central Asia
+
+======================================================================================================================================
+
+LAN topologies and devices
+
+Topologies
+    Bus
+    Star
+    Ring
+    Mesh
+    Wireless
+    Hierarchial
+
+======================================================================================================================================
+
+Switches and their functioning
+
+Switch Operation:
+    Building MAC-Address (CAM) Table
+        Learns by reading Source MAC addresses
+    Forwarding Frames
+        Decision based on Destination MAC address
+
+    Switching Modes:
+      - Cut-Through
+      - Fragment-Free
+      - Store-and-Forward
+
+    CAM Table Overflow Attack:  (CAM Tables have a limit of the number of MAC addresses they can hold)
+      - Send frames with bogus source MAC address to switch
+      - Cause switch to fill table with bogus addresses
+      - Switch will not be able to learn new (valid) MAC addresses
+
+
+
+======================================================================================================================================
+
+Describe MAC addressing
+
+    Length: 48-bit | 6 byte | 12 Hex
+
+    Format:
+        Windows: 01-23-45-12-34-56
+        Unix/Linux: 01:23:45:12:34:56
+        Cisco: 1234.5612.3456
+
+    Parts:
+        OUI - First 24-bits assigned by IANA
+        Vendor Assigned - Last 24-bits assigned by vendor
+
+MAC Address Types:
+    Unicast: One to one
+        --8th bit is off--
+    Multicast: One to many
+        --8th bit is on--
+    Broadcast: One to all
+        --All bits on--
+
+MAC Spoofing:
+    Could not be changed at first
+    Used to be called:
+        hardware
+        firmware
+        burned-in
+    Now it can be changed w/ software
+
+======================================================================================================================================
+
+Data-Link frame headers
+
+
+VLAN Types:
+    Default - VLAN 1
+    Data - User traffic
+    Voice - VOIP traffic
+    Management - Switch and router management
+    Native - Untagged switch and router traffic
+
+VLAN Hopping Attack
+    Switch Spoofing (DTP)
+    Single Tagging
+    Double Tagging (using native VLAN)
+    SCAPY Example Code:
+    https://git.cybbh.space/net/public/-/raw/master/modules/networking/activities/resources/vlan_hopping.adoc
+
+======================================================================================================================================
+
+address resolution protocol (ARP)
+
+
+ARP Types
+    Types
+        ARP (OP 1 and 2)
+        RARP (OP 3 and 4)
+        Proxy ARP (OP 2)
+        Gratuitous ARP (OP 2)
+
+ARP Cache:
+    All resolved MAC to IP resolutions
+    If MAC is not in cache then ARP is used
+    Dynamic entries last from 2-20 minutes
+    Default gateway is present at minimum
+    Can be easily duped by attackers
+
+Man-in-the-Middle (MitM) with ARPL
+    Poison ARP Cache with:
+        Gratuitous ARP
+        Proxy ARP
+
+VLAN Trunking Protocol (VTP)
+    Cisco proprietary
+    Modes:
+        Server
+        Client
+        Transparent
+
+VTP Vulnerability:
+    Can cause switches to dump all VLAN information
+    Cause a DoS as switch will not support configured VLANS
+
+======================================================================================================================================
+
+DTP with its vulnerabilities (Used to dynamically create trunk links)
+
+
+Dynamic Trunking Protocol (DTP)
+    Cisco proprietary
+    Modes:
+        Dynamic-Auto
+        Dynamic-Desirable
+
+Dynamic Trunking Protocol (DTP) Vulnerability
+    On by default
+    Can send crafted messages to form a VLAN trunk link
+    Recommend to:
+        Disable DTP negotiations
+        Manually assign as Access or Trunk
+
+======================================================================================================================================
+
+CDP, FDP, and LLDP:
+    Cisco Discovery Protocol (CDP)
+    Foundry Discovery Protocol (FDP)
+    Link Layer Discovery Protocol (LLDP)
+
+CDP, FDP, and LLDP Vulnerability
+    Leaks valuable information
+    Clear Text
+    Enabled by default
+    Disable it:
+        Globally
+        Per interface
+    May require it for VOIP
+
+======================================================================================================================================
+
+Spanning Tree Protocol (STP)
+
+
+Spanning Tree Protocol (STP) Types:
+    802.1D STP
+    Per VLAN Spanning Tree + (PVST+)
+    802.1w – Rapid Spanning Tree Protocol (RSTP)
+    Rapid Per VLAN Spanning Tree + (RPVST+)
+    802.1s (Multiple Spanning Tree)
+
+Spanning-Tree Attack:
+https://net.cybbh.io/public/networking/latest/01_data/fg.html#_1_3_13_1_spanning_tree_attack
+    Crafted Bridge Protocol Data units (BPDU)
+    Used to perform a DoS or MitM
+
+======================================================================================================================================
+
+Port Security with its vulnerabilities
+
+
+Port Security Modes:
+    Shutdown (default)
+    Protect
+    Restrict
+
+Port Security Can help to:
+    Restrict unauthorized access
+    Limit MAC address learned on port
+    Prevent CAM Table Overflow attacks
+
+Port Security Vulnerabilities:
+    Dependant on MAC address
+    MAC spoofing
+
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Layer 2 Attack mitigation techniques:
+    Shutdown unused ports
+    Enable Port Security
+    IP Source Guard
+    Manually assign STP Root
+    BPDU Guard
+    DHCP Snooping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
