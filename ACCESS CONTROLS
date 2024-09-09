@@ -32,7 +32,7 @@ Common iptable options:
 -A - Appends a rule to the end of the list or below specified rule
 -I - Inserts the rule at the top of the list or above specified rule
 -R - Replaces a rule at the specified rule number
--D - Deletes a rule at the specified rule number
+-D - s a rule at the specified rule number
 -F - Flushes the rules in the selected chain
 -L - Lists the rules in the selected chain using standard formatting
 -S - Lists the rules in the selected chain without standard formatting
@@ -110,8 +110,7 @@ nft add table [family] [table]
 
 
 2. Create the Base Chain
-nft add chain [family] [table] [chain] { type [type] hook [hook]
-    priority [priority] \; policy [policy] \;}
+nft add chain [family] [table] [chain] { type [type] hook [hook] priority [priority] \; policy [policy] \;}
 * [chain] = User defined name for the chain.
 * [type] =  can be filter, route or nat.
 * [hook] = prerouting, ingress, input, forward, output or
@@ -157,8 +156,8 @@ Modify NFTables:
     nft insert rule [family] [table] [chain] [position <position>] [matches] [statement]
     Replaces rule at handle;
     nft replace rule [family] [table] [chain] [handle <handle>] [matches] [statement]
-    Deletes rule at handle;
-    nft delete rule [family] [table] [chain] [handle <handle>]
+    s rule at handle;
+    nft  rule [family] [table] [chain] [handle <handle>]
     To change the current policy;
     nft add chain [family] [table] [chain] { \; policy [policy] \;}
 
